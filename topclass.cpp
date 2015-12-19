@@ -16,11 +16,11 @@ void TopClass::initialize()
     connect(client,SIGNAL(errorNetwork(const QString&)),auth,SLOT(error(const QString&)));
     connect(client,SIGNAL(readServer(const QByteArray&)), profile,SLOT(update(const QByteArray&)));
     connect(client,SIGNAL(errorNetwork(const QString&)),this,SLOT(succesAuth(const QString&)));
-    connect(profile,SIGNAL(sendUrlAvator(const QString&)), client,SLOT(setImage(const QString&)));
+    connect(profile,SIGNAL(queued(int)),client,SLOT(setQueued(int)));
 }
 
 void TopClass::succesAuth(const QString &cod){
-    qDebug()<<cod;
+
     if (cod=="OK"){
         disconnect(auth,SIGNAL(setAuth(const QStringList)),client,SLOT(authenticated(const QStringList&)));
         disconnect(client,SIGNAL(errorNetwork(const QString&)),auth,SLOT(error(const QString&)));

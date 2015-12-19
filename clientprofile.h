@@ -10,7 +10,6 @@
 #include <QTextCodec>
 #include <QDebug>
 #include <QPixmap>
-#include <QFile>
 
 #define DEBUG true
 #define TIMEOUT_UPDATE 2000
@@ -22,12 +21,10 @@ class ClientProfile : public QObject
     Q_OBJECT
 public:
     ClientProfile(QObject *parent=0);
-public slots:
-    void setImage(const QString&);
+
 private:
     QTimer *timer;
     QNetworkAccessManager *manager;
-    QNetworkAccessManager *img_manager;
 signals:
     void readServer(const QByteArray&);
     void errorNetwork(const QString &);
@@ -37,15 +34,15 @@ public slots:
     void updateProfile();
     void authenticated(const QStringList);
     void send();
-    void loadImage(QNetworkReply*);
-  private:
 
+    void setQueued(int);
+
+private:
     QString _url;
     QVariantMap _param;
     QString _login;
     QString _password;
-    QUrl urlImage;
-
+    QString _task;
 };
 
 #endif // CLIENTPROFILE_H

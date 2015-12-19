@@ -7,6 +7,13 @@
 #include <QJsonParseError>
 #include <QDebug>
 #include <QTimer>
+#include <QPushButton>
+#include <QFile>
+#include <QTimer>
+#include <QUrl>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QDir>
 
 namespace Ui {
 class Widget;
@@ -20,13 +27,17 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 signals:
-    void sendUrlAvator(const QString &);
+      void queued(int);
 public slots:
     void update(const QByteArray &);
     void setAvator();//const QVariantMap*);
+    void setQueued();
+    void loadAvator(QNetworkReply *);
 private:
+    QNetworkAccessManager *manager;
+    QUrl url;
     Ui::Widget *ui;
-    QString url_avator;
+    QTimer *timer;
 };
 
 #endif // WIDGET_H
